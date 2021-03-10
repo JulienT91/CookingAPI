@@ -4,17 +4,15 @@ const result = document.getElementById("result");
 
 let search = "";
 
-const fetchSearch = async () => {
-  meals = await fetch(
-    `https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`
-  )
+const fetchSearch = async (url) => {
+  meals = await fetch(`https://www.themealdb.com/api/json/v1/1/${url}`)
     .then((res) => res.json())
     .then((res) => res.meals);
   console.log(meals);
 };
 
 const searchDisplay = async () => {
-  await fetchSearch();
+  await fetchSearch(search);
   if (meals == null) {
     result.innerHTML = '<span class="noResult">No result found</span>';
   }
@@ -39,6 +37,14 @@ const searchDisplay = async () => {
 };
 
 searchInput.addEventListener("input", (e) => {
-  search = e.target.value;
+  search = `search.php?s=${e.target.value}`;
   searchDisplay();
 });
+
+// Random meal
+
+const randomMealDisplay = async () => {
+  await fetchSearch("random.php");
+  
+  result.innerHTML = 
+};
