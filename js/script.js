@@ -8,7 +8,6 @@ const fetchSearch = async (url) => {
   meals = await fetch(`https://www.themealdb.com/api/json/v1/1/${url}`)
     .then((res) => res.json())
     .then((res) => res.meals);
-  console.log(meals);
 };
 
 const searchDisplay = async () => {
@@ -45,6 +44,22 @@ searchInput.addEventListener("input", (e) => {
 
 const randomMealDisplay = async () => {
   await fetchSearch("random.php");
-  
-  result.innerHTML = 
+
+  result.innerHTML = meals.map(
+    (meal) =>
+      `
+        <div class="searchContainer">
+        <h2>${meal.strMeal}</h2>
+          <div class="info">
+              <div>Origin: ${meal.strArea}</div>
+              <div>Category: ${meal.strCategory}</div>
+          </div>
+          <img src='${meal.strMealThumb}' />
+          <div>Recipe:${meal.strInstructions}</div>
+          <a href='${meal.strYoutube}' target="_blank"><i class="fab fa-youtube"></i></a>
+          </div>
+      `
+  );
 };
+
+randomMeal.addEventListener("click", randomMealDisplay);
